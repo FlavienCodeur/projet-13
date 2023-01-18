@@ -1,7 +1,9 @@
 from django.urls import reverse
 
+
 def test_dummy():
     assert 1
+
 
 def test_index_url(client):
     url = reverse("index")
