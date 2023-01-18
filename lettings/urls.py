@@ -7,4 +7,3 @@ urlpatterns = [
     path('lettings/', index, name='index'),
     path('lettings/<int:letting_id>/', letting, name='letting'),
 ]
-
