@@ -7,15 +7,18 @@ orbs:
 jobs:
   build-and-test
     docker :
-      - image: cimg/python:3.10
-      working_directory: ~/project
-      steps:
-        - checkout 
-        - python/install-packages:
-            pkg-manager: pip 
-        - run:
-            name: Test
-            command: pytest
+      - image: cimg/python:3.10.4
+    working_directory: ~/project
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Tests
+          command: pytest
+      - run:
+          name: Linting
+          command: flake8
 
 
 workflows:
