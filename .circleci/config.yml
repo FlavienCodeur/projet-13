@@ -32,7 +32,7 @@ jobs:
           command: docker build -t oc_lettings .
       - run:
           name: Login to DockerHub
-          command: echo $DOCKER_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+          command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Link to DockerHub
           command: docker tag oc_lettings $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
