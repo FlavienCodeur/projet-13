@@ -44,4 +44,5 @@ workflows:
   sample:
     jobs:
       - build-and-test
+      - build-and-push-dockerhub
 
