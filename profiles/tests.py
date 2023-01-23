@@ -5,7 +5,7 @@ from .models import Profile
 from django.test import Client
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db 
 class TestProfiles:
 
     def test_profiles_index(self):
