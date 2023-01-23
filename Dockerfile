@@ -8,6 +8,10 @@ WORKDIR /app
 
 COPY ./requirements.txt /app/
 
+RUN python -m venv env 
+
+RUN env\Scripts\activate
+
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
