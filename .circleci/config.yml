@@ -8,7 +8,7 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.10.4
     steps:
       - checkout
       - python/install-packages:
@@ -19,6 +19,25 @@ jobs:
       - run:
           name: Linting
           command: flake8
+    build-and-push-dockerhub:
+    docker:
+      - image: cimg/python:3.10.4
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build Docker image
+          command: docker build -t oc_lettings .
+      - run:
+          name: Login to DockerHub
+          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+      - run:
+          name: Link to DockerHub
+          command: docker tag oc_lettings $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
+      - run:
+          name: push Docker image
+          command: docker push $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
 
 
 workflows:
