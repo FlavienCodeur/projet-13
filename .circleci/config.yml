@@ -2,3 +2,24 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.5.0
+
+
+jobs:
+  build-and-test
+      docker:
+      - image: cimg/python:3.10
+      working_directory: ~/project
+      steps:
+        - checkout 
+        - python/install-packages:
+            pkg-manager: pip 
+        - run:
+            name: Test
+            command: pytest
+
+
+workflows:
+  sample:
+    jobs:
+      - build-and-test
+
