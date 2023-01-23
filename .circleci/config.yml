@@ -8,7 +8,7 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/python:3.10.4
+      - image: cimg/python:3.10.2
     steps:
       - checkout
       - python/install-packages:
@@ -21,7 +21,7 @@ jobs:
           command: flake8
     build-and-push-dockerhub:
     docker:
-      - image: cimg/python:3.10.4
+      - image: cimg/python:3.10.2
     steps:
       - checkout
       - setup_remote_docker:
