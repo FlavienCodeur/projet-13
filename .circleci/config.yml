@@ -29,7 +29,7 @@ jobs:
           docker_layer_caching: true
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker build -t flavienru/oc_lettings:$TAG .
           docker tag flavienru/oc_lettings:$TAG flavienru/oc_lettings:latest
           docker push flavienru/oc_lettings:$TAG
