@@ -40,10 +40,31 @@ jobs:
           name: push Docker image
           command: docker push $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
 
+    push-heroku:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build Docker image to Heroku
+          command: |
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
-  sample:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
-      - build-and-push-dockerhub
-
+      - build-and-push-dockerhub:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build-and-test
+      - push-heroku:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build-and-push-dockerhub
