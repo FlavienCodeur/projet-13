@@ -30,7 +30,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Docker image
-          command: docker build -t oc_lettings
+          command: docker build -t oc_lettings .
       - run:
           name: Login to DockerHub
           command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
