@@ -63,12 +63,13 @@ jobs:
             curl https://cli-assets.heroku.com/install.sh | sh
             echo $HEROKU_API_KEY
             echo $HEROKU_APP_NAME
+      - run: heroku container:login
       - run:
-          name: Build and push Docker image to Heroku
-          command: |
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
+          command: docker tag $DOCKER_IMAGE:latest registry.heroku.com/$HEROKU_APP_NAME/web
+      - run:
+          command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
+      - run:
+          command: heroku container:release web --app $HEROKU_APP_NAME
 
 workflows:
   sample: 
