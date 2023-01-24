@@ -65,7 +65,7 @@ jobs:
             echo $HEROKU_APP_NAME
       - run: heroku container:login
       - run:
-          command: docker tag $DOCKER_IMAGE registry.heroku.com/$HEROKU_APP_NAME/web
+          command: docker tag $DOCKER_IMAGE:latest registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
