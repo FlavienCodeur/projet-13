@@ -61,4 +61,4 @@ workflows:
             branches:
               only: main
           requires:
-            - build-and-push-dockerhub
+            - build-and-push
