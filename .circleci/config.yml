@@ -52,7 +52,7 @@ jobs:
       - run:
           command: heroku container:login
       - run:
-          command: docker tag oc_lettings:latest registry.heroku.com/$HEROKU_APP_NAME/web
+          command: docker tag flavienru/oc_lettings:latest registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
