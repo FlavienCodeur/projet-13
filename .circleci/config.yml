@@ -52,7 +52,7 @@ jobs:
           command: |
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push --app $HEROKU_APP_NAME web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -app $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release --app $HEROKU_APP_NAME web
 
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
