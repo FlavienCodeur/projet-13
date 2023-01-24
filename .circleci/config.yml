@@ -50,6 +50,7 @@ jobs:
           name: Setup Heroku
           command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
+          command: heroku container:login
       - run:
           command: docker tag oc_lettings registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
