@@ -40,7 +40,7 @@ jobs:
           name: push Docker image
           command: docker push $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
 
-    push-heroku:
+  push-heroku:
     machine: true
     steps:
       - checkout
