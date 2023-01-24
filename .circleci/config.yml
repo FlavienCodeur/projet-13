@@ -29,13 +29,13 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Docker image
-          command: docker build -t $DOCKER_IMAGE:latest .
+          command: docker build -t $DOCKER_IMAGE:0.1  .
       - run:
           name: Login to DockerHub
           command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Link to DockerHub
-          command: docker tag $DOCKER_IMAGE:latest $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
+          command: docker tag $DOCKER_IMAGE:0.1 $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
       - run:
           name: push Docker image
           command: docker push $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
@@ -64,7 +64,7 @@ jobs:
             echo $HEROKU_APP_NAME
       - run: heroku container:login
       - run:
-          command: docker tag $DOCKER_IMAGE:latest registry.heroku.com/$HEROKU_APP_NAME/web
+          command: docker tag $DOCKER_IMAGE:0.1 registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
