@@ -19,26 +19,22 @@ jobs:
       - run:
           name: Linting
           command: flake8
-  build-and-push-dockerhub:
+  build-and-push:
     docker:
-      - image : cimg/python:3.10.2
+      - image: cimg/python:3.10.4
+    working_directory: ~/project
     steps:
-      - checkout 
-      - setup_remote_docker: 
-          version: 20.10.14
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
           docker_layer_caching: true
-      - run:
-          name: Docker image
-          command: docker build -t oc_lettings .
-      - run:
-          name: Login to DockerHub
-          command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-      - run:
-          name: Link to DockerHub
-          command: docker tag oc_lettings $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
-      - run:
-          name: push Docker image
-          command: docker push $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+          docker build -t flavienru/oc_lettings:$TAG .
+          docker tag flavienru/oc_lettings:$TAG flavienru/oc_lettings:latest
+          docker push flavienru/oc_lettings:$TAG
+          docker push flavienru/oc_lettings:latest
 
   deploy_on_heroku:
     docker:
