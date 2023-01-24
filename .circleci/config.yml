@@ -22,7 +22,6 @@ jobs:
   build-and-push:
     docker:
       - image: cimg/python:3.10.4
-    working_directory: ~/project
     steps:
       - checkout
       - setup_remote_docker:
@@ -65,7 +64,7 @@ workflows:
   sample: 
     jobs:
       - build-and-test
-      - build-and-push-dockerhub:
+      - build-and-push:
           filters:
             branches:
               only: main
