@@ -55,19 +55,23 @@ jobs:
           name: Login to DockerHub
           command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
 
+  build-and-push-heroku:
+    machine: true
+    steps:
+      - checkout
       - run:
-          name: Install Heroku CLI
+          name: Setup Heroku
+          command: curl https://cli-assets.heroku.com/install.sh | sh 
+      - run:
+          name: Build and push Docker image to Heroku
           command: |
-            curl https://cli-assets.heroku.com/install.sh | sh
-            echo $HEROKU_API_KEY
-            echo $HEROKU_APP_NAME
-      - run: heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
       - run:
-          command: docker tag $oc_lettings registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          command: heroku container:release web --app $HEROKU_APP_NAME
+          name: Migrate database
+          command: |
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku run python manage.py migrate -a $HEROKU_APP_NAME
 workflows:
   sample: 
     jobs:
@@ -78,7 +82,7 @@ workflows:
               only: main
           requires:
             - build-and-test
-      - deploy_on_heroku:
+      - build-and-push-heroku:
           filters:
             branches:
               only: main
