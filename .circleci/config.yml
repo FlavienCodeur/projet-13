@@ -35,20 +35,6 @@ jobs:
           docker push flavienru/oc_lettings:$TAG
           docker push flavienru/oc_lettings:latest
 
-  deploy_on_heroku:
-    docker:
-      - image: cimg/python:3.10
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
-      - run:
-          name: Login to DockerHub
-          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
 
   build-and-push-heroku:
     machine: true
