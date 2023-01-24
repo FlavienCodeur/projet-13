@@ -71,6 +71,7 @@ jobs:
       - run:
           command: heroku container:release web --app $HEROKU_APP_NAME
 
+workflows:
   sample: 
     jobs:
       - build-and-test
