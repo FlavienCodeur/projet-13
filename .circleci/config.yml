@@ -36,10 +36,10 @@ jobs:
           command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Link to DockerHub
-          command: docker tag $DOCKER_IMAGE:latest $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
+          command: docker tag $DOCKER_IMAGE:latest $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
       - run:
           name: push Docker image
-          command: docker push $DOCKERHUB_USERNAME/oc_lettings:$CIRCLE_SHA1
+          command: docker push $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
 
 
   deploy_on_heroku:
