@@ -45,10 +45,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: upgrade heroku CLI
-          command: |
-            heroku update
-      - run:
           name: Build Docker image to Heroku
           command: |
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
