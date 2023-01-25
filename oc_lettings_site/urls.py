@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('all-profiles/', include('profiles.urls', namespace='all-profiles')),
     path('all-lettings/', include('lettings.urls', namespace='all-lettings')),
+    path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
 ]
