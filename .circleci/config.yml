@@ -67,8 +67,7 @@ jobs:
           command: docker tag $DOCKER_IMAGE registry.heroku.com/$HEROKU_APP_NAME/web
       - run:
           command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          command: heroku container:release web --app $HEROKU_APP_NAME
+
 
 workflows:
   sample: 
