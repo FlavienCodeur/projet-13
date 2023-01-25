@@ -80,7 +80,7 @@ workflows:
               only: main
           requires:
             - build-and-test
-      - build-and-push-heroku:
+      - deploy_on_heroku:
           filters:
             branches:
               only: main
