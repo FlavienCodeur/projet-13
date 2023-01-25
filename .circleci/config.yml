@@ -53,20 +53,24 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
       - run:
-          name: Login to DockerHub
-          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-
-      - run:
           name: Install Heroku CLI
           command: |
             curl https://cli-assets.heroku.com/install.sh | sh
             echo $HEROKU_API_KEY
             echo $HEROKU_APP_NAME
-      - run: heroku container:login
+      - run: HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+
       - run:
-          command: docker tag $DOCKER_IMAGE registry.heroku.com/$HEROKU_APP_NAME/web
+          command: docker pull $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
+      -run:
+          command: HEROKU_API_KEY=${HEROKU_API_KEY} docker tag $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1 registry.heroku.com/${HEROKU_APP_NAME}/web
+
       - run:
-          command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          command: HEROKU_API_KEY=${HEROKU_API_KEY} docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+      - run:
+          command: HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release web -a ${HEROKU_APP_NAME}
+
+
 
 
 workflows:
