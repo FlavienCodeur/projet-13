@@ -54,7 +54,7 @@ jobs:
 
       - run:
           command: docker pull $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
-      -run:
+      - run:
           command: HEROKU_API_KEY=${HEROKU_API_KEY} docker tag $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1 registry.heroku.com/${HEROKU_APP_NAME}/web
 
       - run:
