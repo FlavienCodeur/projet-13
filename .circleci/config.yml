@@ -29,46 +29,31 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Docker image
-          command: docker build -t $DOCKER_IMAGE  .
+          command: docker build -t $DOCKER_IMAGE:0.1  .
       - run:
           name: Login to DockerHub
           command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Link to DockerHub
-          command: docker tag $DOCKER_IMAGE $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
+          command: docker tag $DOCKER_IMAGE:0.1 $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
       - run:
           name: push Docker image
           command: docker push $DOCKERHUB_USERNAME/lettings:$CIRCLE_SHA1
 
 
-  deploy_on_heroku:
-    docker:
-      - image: cimg/python:3.10
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+  build-and-push-heroku:
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
       - run:
-          name: Login to DockerHub
-          command: docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-
+          name: Setup Heroku
+          command: curl https://cli-assets.heroku.com/install.sh | sh 
       - run:
-          name: Install Heroku CLI
+          name: Build and push Docker image to Heroku
           command: |
-            curl https://cli-assets.heroku.com/install.sh | sh
-            echo $HEROKU_API_KEY
-            echo $HEROKU_APP_NAME
-      - run: heroku container:login
-      - run:
-          command: docker tag $DOCKER_IMAGE registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          command: docker push registry.heroku.com/$HEROKU_APP_NAME/web
-      - run:
-          command: heroku container:release web --app $HEROKU_APP_NAME
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   sample: 
@@ -80,7 +65,7 @@ workflows:
               only: main
           requires:
             - build-and-test
-      - deploy_on_heroku:
+      - build-and-push-heroku:
           filters:
             branches:
               only: main
