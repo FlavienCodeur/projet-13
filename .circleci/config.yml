@@ -42,6 +42,7 @@ jobs:
 
 
   deploy_on_heroku:
+    machine: true
     steps:
       - checkout
       - run:
