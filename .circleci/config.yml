@@ -42,8 +42,11 @@ jobs:
   deploy:
     docker:
       - image: cimg/python:3.10.4
+    executor: heroku/default
     steps:
        - checkout
+      - heroku/install
+
        - run:
            name: Deploy Main to Heroku
            command: |
