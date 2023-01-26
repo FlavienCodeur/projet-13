@@ -45,7 +45,7 @@ jobs:
     executor: heroku/default
     steps:
        - checkout
-      - heroku/install
+       - heroku/install
 
        - run:
            name: Deploy Main to Heroku
