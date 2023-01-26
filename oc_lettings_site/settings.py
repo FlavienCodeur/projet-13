@@ -127,7 +127,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 sentry_sdk.init(
     dsn=
-    "https://4a3665dd5e2d43278fe8cd83d87725fc@o4504565957459968.ingest.sentry.io/4504566087221248",
+    os.environ.get('SENTRY_KEY'),
     integrations=[
         DjangoIntegration(),
     ],
