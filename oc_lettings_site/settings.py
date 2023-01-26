@@ -122,8 +122,7 @@ WHITENOISE_USE_FINDERS = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+
 
 sentry_sdk.init(
     dsn=
