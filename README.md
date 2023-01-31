@@ -93,10 +93,15 @@ Le deploiement est gere directement via circle ci , le fichier de configuration 
 Dans le dépôt CircleCi renseigner les variables d'environnement :
 
 SECRET_KEY = Clé secrète de l'application Django
+
 DOCKER_USERNAME = Votre identifiant DOCKERHUB
+
 DOCKER_PASSWORD = Votre mot de passe DOCKERHUB
+
 HEROKU_API_KEY = Clé de l'application HEROKU
-SENTRY_KEY = Clé secrete du logging de l'application 
+
+SENTRY_KEY = Clé secrete du logging de l'application
+
 HEROKU_APP_NAME = Nom de l'application HEROKU
 
 Ensuite veuillez lancer la pipeline et le deploiement sera effectué sur votre application Heroku.
