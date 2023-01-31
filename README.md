@@ -106,5 +106,7 @@ Dans le dépôt CircleCi renseigner les variables d'environnement :
 
 Ensuite veuillez lancer la pipeline et le deploiement sera effectué sur votre application Heroku.
 `https://lettings.herokuapp.com/`
+
 `https://app.circleci.com/pipelines/github/FlavienCodeur`
+
 `https://sentry.io/organizations/student-aq6/projects/python-django/?project=4504566087221248`
