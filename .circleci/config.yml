@@ -56,7 +56,7 @@ jobs:
            command: |
              HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SECRET_KEY=$SECRET_KEY --app ${HEROKU_APP_NAME}
              HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set SENTRY_KEy=$SENTRY_KEY --app ${HEROKU_APP_NAME}
-           command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_OC_LETTINGS.git master
 
 
 
